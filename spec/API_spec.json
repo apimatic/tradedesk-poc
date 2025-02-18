@@ -1,0 +1,572 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Workflows API",
+    "description": "A RESTful service for commonly used workflows.",
+    "contact": {},
+    "version": "1.0.0",
+    "x-codegen-settings": {
+      "UserAgent": "{language} SDK, Version: {version}, on OS {os-info}",
+      "BrandLabel": "The Trade Desk"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{defaultHost}",
+      "variables": {
+        "defaultHost": {
+          "default": "hydra.workflows.dev.gen.adsrvr.org"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/campaign": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "summary": "Create a new campaign with required fields",
+        "description": "",
+        "operationId": "CreateCampaign",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCampaignRequestBodyJson"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCampaignResponse201Json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/seed": {
+      "post": {
+        "tags": [
+          "Seed"
+        ],
+        "summary": "Create a new seed with required fields",
+        "description": "",
+        "operationId": "Createanewseedwithrequiredfields",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateanewseedwithrequiredfieldsRequestBodyJson"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Seed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Campaign": {
+        "title": "Campaign",
+        "required": [
+          "advertiserId",
+          "campaignName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "This is a campaign ID",
+            "format": "int32"
+          },
+          "advertiserId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The platform ID of the advertiser that owns this Campaign."
+          },
+          "campaignName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the Campaign."
+          }
+        },
+        "description": "This is a campaign response"
+      },
+      "CampaignChannel": {
+        "title": "CampaignChannel",
+        "enum": [
+          "None",
+          "Display",
+          "Audio",
+          "Video",
+          "TV",
+          "NativeVideo",
+          "NativeDisplay",
+          "DOOH"
+        ],
+        "type": "string"
+      },
+      "CampaignCreateROIGoalInput": {
+        "title": "CampaignCreateROIGoalInput",
+        "type": "object",
+        "properties": {
+          "maximizeReach": {
+            "type": "boolean",
+            "description": "Reach as many unique users as possible in your intended audience.",
+            "nullable": true
+          },
+          "maximizeLtvIncrementalReach": {
+            "type": "boolean",
+            "description": "The goal is to reach as many users as possible beyond those who have already reached on Linear TV.",
+            "nullable": true
+          },
+          "cpcInAdvertiserCurrency": {
+            "type": "number",
+            "description": "The Cost Per Click goal (in the Advertiser currency).",
+            "nullable": true
+          },
+          "ctrInPercent": {
+            "type": "number",
+            "description": "The Click Through Rate goal (in percent), for example, 1 = 1% (1 in 100).",
+            "nullable": true
+          },
+          "nielsenOTPInPercent": {
+            "type": "number",
+            "description": "The Nielsen On Target Percentage goal (in percent), for example, 1 = 1% (1 in 100).",
+            "nullable": true
+          },
+          "cpaInAdvertiserCurrency": {
+            "type": "number",
+            "description": "The Cost Per Acquisition goal (in the Advertiser currency).",
+            "nullable": true
+          },
+          "returnOnAdSpendPercent": {
+            "type": "number",
+            "description": "The Return on Ad Spend goal (in percent of ad spend).",
+            "nullable": true
+          },
+          "vcrInPercent": {
+            "type": "number",
+            "description": "The Video Completion Rate goal (in percent), for example, 1 = 1% (1 in 100).",
+            "nullable": true
+          },
+          "viewabilityInPercent": {
+            "type": "number",
+            "description": "The Viewability goal (in percent), for example, 1 = 1% (1 in 100).",
+            "nullable": true
+          },
+          "vcpmInAdvertiserCurrency": {
+            "type": "number",
+            "description": "The Estimated Viewable Cost Per Mille (thousand) goal (in the Advertiser currency).",
+            "nullable": true
+          },
+          "cpcvInAdvertiserCurrency": {
+            "type": "number",
+            "description": "Cost Per Completed View goal (in the Advertiser currency).",
+            "nullable": true
+          }
+        }
+      },
+      "CampaignCreationInput": {
+        "title": "CampaignCreationInput",
+        "required": [
+          "advertiserId",
+          "campaignName",
+          "primaryChannel",
+          "primaryGoal",
+          "campaignFlights"
+        ],
+        "type": "object",
+        "properties": {
+          "advertiserId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The platform ID of the advertiser that owns this Campaign."
+          },
+          "campaignName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the Campaign."
+          },
+          "primaryChannel": {
+            "$ref": "#/components/schemas/CampaignCreationInputPrimaryChannel"
+          },
+          "primaryGoal": {
+            "$ref": "#/components/schemas/CampaignCreationInputPrimaryGoal"
+          },
+          "campaignFlights": {
+            "$ref": "#/components/schemas/CampaignCreationInputCampaignFlights"
+          }
+        },
+        "description": "Schema with required fields for creating a new campaign"
+      },
+      "CampaignFlightCreationInput": {
+        "title": "CampaignFlightCreationInput",
+        "required": [
+          "startDateInclusiveUTC",
+          "budgetInAdvertiserCurrency"
+        ],
+        "type": "object",
+        "properties": {
+          "startDateInclusiveUTC": {
+            "type": "string",
+            "description": "The date and time (in UTC) when the campaign flight is to start spending.",
+            "format": "date-time"
+          },
+          "endDateExclusiveUTC": {
+            "type": "string",
+            "description": "The date and time (in UTC) when the campaign flight is to stop spending if it has not yet exhausted its budget. To create or update a campaign flight, you may not set this property value to a date in the past.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "budgetInAdvertiserCurrency": {
+            "type": "number",
+            "description": "The maximum amount the campaign flight may spend. This must be in the currency of the advertiser that owns the campaign."
+          },
+          "budgetInImpressions": {
+            "type": "integer",
+            "description": "The maximum amount of impressions the campaign flight should buy.",
+            "format": "int64",
+            "nullable": true
+          },
+          "dailyTargetInAdvertiserCurrency": {
+            "type": "number",
+            "description": "The total amount the campaign flight should spend in a single day, if possible. If you do not want to limit the daily spend, you may set it to null. This must be in the currency of the advertiser that owns the campaign.",
+            "nullable": true
+          },
+          "dailyTargetInImpressions": {
+            "type": "integer",
+            "description": "The total amount of impressions the campaign flight should buy in a single day, if possible. If you do not want to limit the daily impressions, you may set it to null.",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "ContextualDataInput": {
+        "title": "ContextualDataInput",
+        "type": "object",
+        "properties": {
+          "keyphrases": {
+            "$ref": "#/components/schemas/ContextualDataInputKeyphrases"
+          },
+          "urls": {
+            "$ref": "#/components/schemas/ContextualDataInputUrls"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "title": "ProblemDetails",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "Seed": {
+        "title": "Seed",
+        "required": [
+          "id",
+          "seedName",
+          "advertiserId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seedName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of this seed"
+          },
+          "advertiserId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The platform ID of the advertiser that owns this Campaign."
+          }
+        }
+      },
+      "SeedCreationInput": {
+        "title": "SeedCreationInput",
+        "required": [
+          "advertiserId",
+          "seedName",
+          "isDefault",
+          "targetingData"
+        ],
+        "type": "object",
+        "properties": {
+          "advertiserId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The platform ID of the advertiser that owns this Seed."
+          },
+          "seedName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the Seed."
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the default seed for this advertiser"
+          },
+          "targetingData": {
+            "$ref": "#/components/schemas/SeedCreationInputTargetingData"
+          }
+        },
+        "description": "Required fields for creating a new seed"
+      },
+      "SeedTargetingDataInput": {
+        "title": "SeedTargetingDataInput",
+        "type": "object",
+        "properties": {
+          "firstPartyDataInclusionIds": {
+            "$ref": "#/components/schemas/SeedTargetingDataInputFirstPartyDataInclusionIds"
+          },
+          "retailDataInclusion": {
+            "$ref": "#/components/schemas/SeedTargetingDataInputRetailDataInclusion"
+          },
+          "thirdPartyDataInclusion": {
+            "$ref": "#/components/schemas/SeedTargetingDataInputThirdPartyDataInclusion"
+          },
+          "contextualInclusion": {
+            "$ref": "#/components/schemas/SeedTargetingDataInputContextualInclusion"
+          },
+          "countryFilterIds": {
+            "$ref": "#/components/schemas/SeedTargetingDataInputCountryFilterIds"
+          }
+        }
+      },
+      "ThirdPartyDataInput": {
+        "title": "ThirdPartyDataInput",
+        "required": [
+          "thirdPartyDataBrandId"
+        ],
+        "type": "object",
+        "properties": {
+          "thirdPartyDataId": {
+            "type": "integer",
+            "description": "ThirdPartyDataId",
+            "format": "int64",
+            "nullable": true
+          },
+          "thirdPartyDataBrandId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "ThirdPartyDataBrandId"
+          }
+        }
+      },
+      "CreateCampaignRequestBodyJson": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CampaignCreationInput"
+          },
+          {}
+        ]
+      },
+      "CreateCampaignResponse201Json": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Campaign"
+          },
+          {
+            "description": "This is a campaign response"
+          }
+        ]
+      },
+      "CreateanewseedwithrequiredfieldsRequestBodyJson": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SeedCreationInput"
+          },
+          {}
+        ]
+      },
+      "CampaignCreationInputPrimaryChannel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CampaignChannel"
+          },
+          {}
+        ]
+      },
+      "CampaignCreationInputPrimaryGoal": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CampaignCreateROIGoalInput"
+          },
+          {}
+        ]
+      },
+      "CampaignCreationInputCampaignFlights": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CampaignFlightCreationInput"
+        },
+        "description": "The List of flights associated with the Campaign."
+      },
+      "ContextualDataInputKeyphrases": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Keyphrases",
+        "nullable": true
+      },
+      "ContextualDataInputUrls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Urls",
+        "nullable": true
+      },
+      "SeedCreationInputTargetingData": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SeedTargetingDataInput"
+          },
+          {}
+        ]
+      },
+      "SeedTargetingDataInputFirstPartyDataInclusionIds": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": "These are the AdvertiserTargetingDataIds for first party data.",
+        "nullable": true
+      },
+      "SeedTargetingDataInputRetailDataInclusion": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ThirdPartyDataInput"
+        },
+        "description": "RetailDataInclusion",
+        "nullable": true
+      },
+      "SeedTargetingDataInputThirdPartyDataInclusion": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ThirdPartyDataInput"
+        },
+        "description": "ThirdPartyDataInclusion",
+        "nullable": true
+      },
+      "SeedTargetingDataInputContextualInclusion": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContextualDataInput"
+          },
+          {}
+        ]
+      },
+      "SeedTargetingDataInputCountryFilterIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "CountryFilterIds",
+        "nullable": true
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme",
+        "scheme": "bearer",
+        "bearerFormat": "jwt"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Campaign",
+      "description": ""
+    },
+    {
+      "name": "Seed",
+      "description": ""
+    }
+  ]
+}
